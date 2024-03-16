@@ -1,0 +1,43 @@
+[package]
+name = "bit-rgb20-private"
+version = "0.1.0"
+edition = "2021"
+resolver = "2"
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+amplify = "4.6.0"
+ascii-armor = "0.2.0"
+strict_encoding = "2.7.0-beta.1"
+strict_types = "2.7.0-beta.1"
+aluvm = { version = "0.11.0-beta.4", features = ["log"] }
+bp-core = "0.11.0-beta.4"
+rgb-std = { version = "0.11.0-beta.4", features = ["serde", "fs"] }
+serde = "1.0"
+serde_json = "1.0"
+sha2 = "0.10.8"
+rgb-schemata = "0.11.0-beta.4"
+bdk = { version = "1.0.0-alpha.6", default-features = false }
+bdk_esplora = { version = "0.9.0", features = ["blocking"] }
+hex = "0.4.3"
+
+[dev-dependencies]
+chrono = "0.4.31"
+serde_yaml = "0.9.27"
+
+[features]
+all = []
+
+[patch.crates-io]
+commit_verify = { git = "https://github.com/LNP-BP/client_side_validation", branch = "master" }
+bp-consensus = { git = "https://github.com/BP-WG/bp-core", branch = "master" }
+bp-dbc = { git = "https://github.com/BP-WG/bp-core", branch = "master" }
+bp-seals = { git = "https://github.com/BP-WG/bp-core", branch = "master" }
+bp-core = { git = "https://github.com/BP-WG/bp-core", branch = "master" }
+rgb-core = { git = "https://github.com/RGB-WG/rgb-core", branch = "master" }
+rgb-std = { git = "https://github.com/RGB-WG/rgb-std", branch = "master" }
+rgb-schemata = { git = "https://github.com/RGB-WG/rgb-schemata", branch = "master" }
+
+[profile.release]
+debug = 0
+lto = "off"
