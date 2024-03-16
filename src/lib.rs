@@ -1,5 +1,3 @@
-// TODO:: airdrop to all addresses in the genesis block
-
 #[cfg(test)]
 mod tests {
     use std::convert::Infallible;
@@ -38,7 +36,7 @@ mod tests {
     #[test]
     fn test_contract_creation() {
         let beneficiary_txid =
-            Txid::from_hex("14295d5bb1a191cdb6286dc0944df938421e3dfcbf0811353ccac4100c2068c5")
+            Txid::from_hex("d6afd1233f2c3a7228ae2f07d64b2091db0d66f2e8ef169cf01217617f51b8fb")
                 .unwrap();
         let beneficiary = Outpoint::new(beneficiary_txid, 1);
 
