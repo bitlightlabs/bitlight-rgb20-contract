@@ -23,7 +23,7 @@ build:
 	cargo build --release
 
 run: contracts
-	cargo run
+	cargo run --bin bitlight-rgb20-contract
 	@echo
 	@echo "Contracts are available in the examples directory"
 	@echo "---------------------------------"
