@@ -74,7 +74,7 @@ get satoshis faucet for alice and bob
 
 ```
 make core-cli
-load wallet
+load_wallet
 send bcrt1pn0s2pajhsw38fnpgcj79w3kr3c0r89y3xyekjt8qaudje70g4shs20nwfx 1
 send bcrt1plphl407vyfpml2thhypzuqk232256njnaw4zhtmyrrku66pqn9usx4x59h 1
 mint 1 
