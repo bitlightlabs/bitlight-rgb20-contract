@@ -264,28 +264,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "d86b93f97252c47b41663388e6d155714a9d0c398b99f1005cbc5f978b29f445"
 
 [[package]]
-name = "bit-rgb20-private"
-version = "0.1.0"
-dependencies = [
- "aluvm",
- "amplify",
- "ascii-armor",
- "bdk",
- "bdk_esplora",
- "bp-core",
- "chrono",
- "hex",
- "rgb-schemata",
- "rgb-std",
- "serde",
- "serde_json",
- "serde_yaml",
- "sha2",
- "strict_encoding",
- "strict_types",
-]
-
-[[package]]
 name = "bitcoin"
 version = "0.30.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -349,6 +327,28 @@ name = "bitflags"
 version = "2.4.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "ed570934406eb16438a4e976b1b4500774099c13b8cb96eec99f620f05090ddf"
+
+[[package]]
+name = "bitlight-rgb20-contract"
+version = "0.1.0"
+dependencies = [
+ "aluvm",
+ "amplify",
+ "ascii-armor",
+ "bdk",
+ "bdk_esplora",
+ "bp-core",
+ "chrono",
+ "hex",
+ "rgb-schemata",
+ "rgb-std",
+ "serde",
+ "serde_json",
+ "serde_yaml",
+ "sha2",
+ "strict_encoding",
+ "strict_types",
+]
 
 [[package]]
 name = "blake3"

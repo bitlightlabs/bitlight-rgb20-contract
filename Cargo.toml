@@ -1,5 +1,5 @@
 [package]
-name = "bit-rgb20-private"
+name = "bitlight-rgb20-contract"
 version = "0.1.0"
 edition = "2021"
 resolver = "2"
