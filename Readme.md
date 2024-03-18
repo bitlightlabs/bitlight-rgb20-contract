@@ -131,6 +131,7 @@ Create rgb wallet container for Alice:
 
 ```bash
 $ rgb-d .alice create default --tapret-key-only <alice-fixed-xpub-descriptor>
+$ rgb-d .alice create default --tapret-key-only "[5183a8d8/86'/1'/0']tpubDDtdVYn7LWnWNUXADgoLGu48aLH4dZ17hYfRfV9rjB7QQK3BrphnrSV6pGAeyfyiAM7DmXPJgRzGoBdwWvRoFdJoMVpWfmM9FCk8ojVhbMS/<0;1;9;10>/*"
 
 Loading descriptor from command-line argument ... success
 Syncing keychain 0 ........... keychain 1 .......... keychain 9 .......... keychain 10 .......... success
