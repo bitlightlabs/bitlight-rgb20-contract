@@ -130,8 +130,8 @@ export ESPLORA_SERVER="http://esplora-api.bitlight-local-env.orb.local:3000"
 Create rgb wallet container for Alice:
 
 ```bash
-$ rgb-d .alice create default --tapret-key-only <alice-fixed-xpub-descriptor>
-$ rgb-d .alice create default --tapret-key-only "[5183a8d8/86'/1'/0']tpubDDtdVYn7LWnWNUXADgoLGu48aLH4dZ17hYfRfV9rjB7QQK3BrphnrSV6pGAeyfyiAM7DmXPJgRzGoBdwWvRoFdJoMVpWfmM9FCk8ojVhbMS/<0;1;9;10>/*"
+$ rgb -d .alice create default --tapret-key-only <alice-fixed-xpub-descriptor>
+$ rgb -d .alice create default --tapret-key-only "[5183a8d8/86'/1'/0']tpubDDtdVYn7LWnWNUXADgoLGu48aLH4dZ17hYfRfV9rjB7QQK3BrphnrSV6pGAeyfyiAM7DmXPJgRzGoBdwWvRoFdJoMVpWfmM9FCk8ojVhbMS/<0;1;9;10>/*"
 
 Loading descriptor from command-line argument ... success
 Syncing keychain 0 ........... keychain 1 .......... keychain 9 .......... keychain 10 .......... success
@@ -152,7 +152,7 @@ Wallet total balance: 100000000 ṩ
 Create rgb wallet container for Bob:
 
 ```bash
-$ rgb-d .bob create default --tapret-key-only <bob-fixed-xpub-descriptor>
+$ rgb -d .bob create default --tapret-key-only <bob-fixed-xpub-descriptor>
 
 Loading descriptor from command-line argument ... success
 Syncing keychain 0 ........... keychain 1 .......... keychain 9 .......... keychain 10 .......... success
@@ -367,9 +367,9 @@ At that time, Bob and Alice would get different outputs with `rgb state` and `rg
 For Alice:
 
 ```bash
-$ RGB_BIT_CONTRACT="rgb:2bLwMXo-deVgzKq97-GUVy6wXea-G1nE84nxw-v5CX3WSJN-mbhsMn7"
-$ rgb -d .alice state $RGB_BIT_CONTRACT RGB20 --sync
-$ rgb -d .alice state $RGB_BIT_CONTRACT RGB20
+$ RGB20_CONTRACT="rgb:2bLwMXo-deVgzKq97-GUVy6wXea-G1nE84nxw-v5CX3WSJN-mbhsMn7"
+$ rgb -d .alice state $RGB20_CONTRACT RGB20 --sync
+$ rgb -d .alice state $RGB20_CONTRACT RGB20
 
 Global:
   spec := (naming=(ticker=("TEST"), name=("Test asset"), details=~), precision=8)
@@ -385,8 +385,8 @@ Owned:
 For Bob:
 
 ```bash
-rgb -d .bob state $RGB_BIT_CONTRACT RGB20 --sync
-rgb -d .bob state $RGB_BIT_CONTRACT RGB20
+rgb -d .bob state $RGB20_CONTRACT RGB20 --sync
+rgb -d .bob state $RGB20_CONTRACT RGB20
 Global:
   spec := (naming=(ticker=("TEST"), name=("Test asset"), details=~), precision=8)
   data := (terms=(""), media=~)
