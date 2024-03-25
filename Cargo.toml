@@ -31,3 +31,5 @@ rgb-schemata = { git = "https://github.com/RGB-WG/rgb-schemata", branch = "maste
 [profile.release]
 debug = 0
 lto = "off"
+
+[workspace]
