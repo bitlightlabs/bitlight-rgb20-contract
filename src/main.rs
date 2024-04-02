@@ -33,8 +33,8 @@ impl ResolveHeight for DumbResolver {
 #[rustfmt::skip]
 fn main() {
     let beneficiary_txid =
-        Txid::from_hex("d6afd1233f2c3a7228ae2f07d64b2091db0d66f2e8ef169cf01217617f51b8fb").unwrap();
-    let beneficiary = Outpoint::new(beneficiary_txid, 1);
+        Txid::from_hex("8b0656cf4f20cce6cfc231df0c9a6691a59d2645939ef603afbfd164004fbe0c").unwrap();
+    let beneficiary = Outpoint::new(beneficiary_txid, 0);
 
     let contract = NonInflatableAsset::testnet("TEST", "Test asset", None, Precision::CentiMicro)
         .expect("invalid contract data")
@@ -68,5 +68,4 @@ fn main() {
         eprintln!("amount={state}, owner={seal}, witness={witness}");
     }
     eprintln!("totalSupply={}", contract.total_supply());
-    eprintln!("created={}", contract.created().to_local().unwrap());
 }

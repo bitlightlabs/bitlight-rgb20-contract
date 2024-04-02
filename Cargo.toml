@@ -10,10 +10,10 @@ amplify = "4.6.0"
 ascii-armor = "0.2.0"
 strict_encoding = "2.7.0-beta.1"
 bp-core = "0.11.0-beta.5"
-rgb-std = { version = "0.11.0-beta.4", features = ["serde", "fs"] }
+rgb-std = { version = "0.11.0-beta.5", features = ["serde", "fs"] }
 serde = "1.0"
 serde_json = "1.0"
-rgb-schemata = "0.11.0-beta.4"
+rgb-schemata = "0.11.0-beta.5"
 bdk = { version = "1.0.0-alpha.8", default-features = false }
 bdk_esplora = { version = "0.10.0", features = ["blocking"] }
 hex = "0.4.3"
@@ -21,12 +21,6 @@ hex = "0.4.3"
 [features]
 all = []
 
-[patch.crates-io]
-rgb-std = { git = "https://github.com/RGB-WG/rgb-std", branch = "master" }
-rgb-schemata = { git = "https://github.com/RGB-WG/rgb-schemata", branch = "master" }
-
 [profile.release]
 debug = 0
 lto = "off"
-
-[workspace]
