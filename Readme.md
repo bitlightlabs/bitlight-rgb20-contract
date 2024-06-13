@@ -75,8 +75,11 @@ get satoshis faucet for alice and bob
 ```
 make core-cli
 load_wallet
+# alice
 send bcrt1pn0s2pajhsw38fnpgcj79w3kr3c0r89y3xyekjt8qaudje70g4shs20nwfx 1
 send bcrt1plphl407vyfpml2thhypzuqk232256njnaw4zhtmyrrku66pqn9usx4x59h 1
+# bob
+send bcrt1p9yjaffzhuh9p7d9gnwfunxssngesk25tz7rudu4v69dl6e7w7qhq5x43k5 1
 mint 1 
 ```
 
@@ -104,9 +107,9 @@ make run
 
 ```text
 The issued contract data:
-{"naming":{"ticker":"TEST","name":"Test asset","details":null},"precision":"centiMicro"}
-amount=100000000000, owner=bc:tapret1st:d6afd1233f2c3a7228ae2f07d64b2091db0d66f2e8ef169cf01217617f51b8fb:1, witness=~
-totalSupply=100000000000
+{"ticker":"TEST","name":"Test asset","details":null,"precision":"centiMicro"}
+amount=adMhBHaQ, owner=bc:tapret1st:311ec7d43f0f33cda5a0c515a737b5e0bbce3896e6eb32e67db0e868a58f4150:1, witness=~
+totalSupply=adMhBHaQ
 
 Contracts are available in the examples directory
 ---------------------------------
@@ -175,9 +178,9 @@ Import contract for Alice
 ```
 $ rgb -d .alice import examples/rgb20-simplest.rgb
 
-Loading descriptor from wallet default ... success
-Loading stock ... stock file is absent, creating a new one ... success
-Contract urn:lnp-bp:consignment:54zd2k-aPk6BV2u-SKa6HDPh-tCp86dPm-h4N6Ebo8-AQt1Pw#quest-hostel-pulse imported to the stash
+Importing consignment rgb:csg:D6$4UcFP-6siMEPG-z5WedGG-!gfynub-7vIFN93-KGneAc4#parking-agent-parody:
+- validating the contract rgb:2TglHDbZ-!ntHfLf-yLEEFpM-o!sLGAz-Bw84b8m-hXRuSW0 ... success
+Consignment is imported
 ```
 
 After that, we can inspect contracts state with `rgb state` command.
@@ -186,20 +189,20 @@ get the state of the contract for Alice
 
 ```bash
 $ rgb -d .alice contracts
-rgb:2bLwMXo-deVgzKq97-GUVy6wXea-G1nE84nxw-v5CX3WSJN-mbhsMn7
-
+rgb:2TglHDbZ-!ntHfLf-yLEEFpM-o!sLGAz-Bw84b8m-hXRuSW0	bitcoin            	2024-06-13	rgb:sch:KzMZV9bO7gFhox97!klj0FonG2ZKnjuOIg2tFChu$YA#lucas-episode-silicon
+  Developer: ssi:anonymous
+$ export RGB20_CONTRACT="rgb:2TglHDbZ-!ntHfLf-yLEEFpM-o!sLGAz-Bw84b8m-hXRuSW0"
 # rgb -d <DATA_DIR> state <CONTRACT_ID> <IFACE>
-$ rgb -d .alice state rgb:2bLwMXo-deVgzKq97-GUVy6wXea-G1nE84nxw-v5CX3WSJN-mbhsMn7 RGB20
+$ rgb -d .alice state $RGB20_CONTRACT RGB20Fixed
 
 Global:
-  spec := (naming=(ticker=("TEST"), name=("Test asset"), details=~), precision=8)
-  data := (terms=(""), media=~)
+  spec := (ticker=("TEST"), name=("Test asset"), details=~, precision=8)
+  terms := (text=(""), media=~)
   issuedSupply := (100000000000)
-  created := (1710580778)
 
 Owned:
   assetOwner:
-    amount=100000000000, utxo=bc:tapret1st:d6afd1233f2c3a7228ae2f07d64b2091db0d66f2e8ef169cf01217617f51b8fb:1, witness=~ # owned by the wallet
+    value=adMhBHaQ, utxo=bc:tapret1st:311ec7d43f0f33cda5a0c515a737b5e0bbce3896e6eb32e67db0e868a58f4150:1, witness=~
 ```
 
 Import contract For Bob:
@@ -207,22 +210,19 @@ Import contract For Bob:
 ```bash
 $ rgb -d .bob import examples/rgb20-simplest.rgb
 $ rgb -d .bob contracts
-rgb:2bLwMXo-deVgzKq97-GUVy6wXea-G1nE84nxw-v5CX3WSJN-mbhsMn7
-
-$ rgb -d .bob state rgb:2bLwMXo-deVgzKq97-GUVy6wXea-G1nE84nxw-v5CX3WSJN-mbhsMn7 RGB20
+$ rgb -d .bob state $RGB20_CONTRACT RGB20Fixed
 
 Global:
-  spec := (naming=(ticker=("TEST"), name=("Test asset"), details=~), precision=8)
-  data := (terms=(""), media=~)
+  spec := (ticker=("TEST"), name=("Test asset"), details=~, precision=8)
+  terms := (text=(""), media=~)
   issuedSupply := (100000000000)
-  created := (1710580778)
 
 Owned:
   assetOwner:
 ```
 
 Now we have successfully created an rgb20 token, and the owner
-is `bc:tapret1st:d6afd1233f2c3a7228ae2f07d64b2091db0d66f2e8ef169cf01217617f51b8fb:1`, which belongs to Alice.
+is `bc:tapret1st:311ec7d43f0f33cda5a0c515a737b5e0bbce3896e6eb32e67db0e868a58f4150:1`, which belongs to Alice.
 
 ## Transfer
 
@@ -239,15 +239,15 @@ There are about five steps in a complete transfer:
 To receive 1,000 #Test, Bob needs to create an invoice and send it to Alice.
 
 ```bash
-$ rgb -d .bob invoice rgb:2bLwMXo-deVgzKq97-GUVy6wXea-G1nE84nxw-v5CX3WSJN-mbhsMn7 RGB20 1000 --address-based 
-rgb:2bLwMXo-deVgzKq97-GUVy6wXea-G1nE84nxw-v5CX3WSJN-mbhsMn7/RGB20/1000+bcrt:p9yjaffzhuh9p7d9gnwfunxssngesk25tz7rudu4v69dl6e7w7qhq5x43k5
+$ rgb -d .bob invoice $RGB20_CONTRACT RGB20Fixed 2000
+rgb:2TglHDbZ-!ntHfLf-yLEEFpM-o!sLGAz-Bw84b8m-hXRuSW0/RGB20Fixed/TadF+bcrt:utxob:4HhkKFP6-92o3r0C-EUCK1DI-k0hamBB-CU9xauX-GhjVSHs-IRESQ
 ```
 
 ### Make a transfer
 
 ```bash
 $ rgb -d .alice transfer \
-    rgb:2bLwMXo-deVgzKq97-GUVy6wXea-G1nE84nxw-v5CX3WSJN-mbhsMn7/RGB20/1000+bcrt:p9yjaffzhuh9p7d9gnwfunxssngesk25tz7rudu4v69dl6e7w7qhq5x43k5 \
+    rgb:2TglHDbZ-!ntHfLf-yLEEFpM-o!sLGAz-Bw84b8m-hXRuSW0/RGB20Fixed/TadF+bcrt:utxob:4HhkKFP6-92o3r0C-EUCK1DI-k0hamBB-CU9xauX-GhjVSHs-IRESQ \
     transfer.consignment alice.psbt
 ```
 
@@ -367,33 +367,29 @@ At that time, Bob and Alice would get different outputs with `rgb state` and `rg
 For Alice:
 
 ```bash
-$ RGB20_CONTRACT="rgb:2bLwMXo-deVgzKq97-GUVy6wXea-G1nE84nxw-v5CX3WSJN-mbhsMn7"
-$ rgb -d .alice state $RGB20_CONTRACT RGB20 --sync
-$ rgb -d .alice state $RGB20_CONTRACT RGB20
+$ RGB20_CONTRACT="rgb:2TglHDbZ-!ntHfLf-yLEEFpM-o!sLGAz-Bw84b8m-hXRuSW0"
+$ rgb -d .alice state $RGB20_CONTRACT RGB20Fixed --sync
 
 Global:
-  spec := (naming=(ticker=("TEST"), name=("Test asset"), details=~), precision=8)
-  data := (terms=(""), media=~)
+  spec := (ticker=("TEST"), name=("Test asset"), details=~, precision=8)
+  terms := (text=(""), media=~)
   issuedSupply := (100000000000)
-  created := (1710580778)
 
 Owned:
   assetOwner:
-    amount=99999999000, utxo=bc:tapret1st:0fd2b9f690428f751aa381c82cadf52b50ced63616802fe0803cb983d5ac3e1a:0, witness=bc:0fd2b9f690428f751aa381c82cadf52b50ced63616802fe0803cb983d5ac3e1a # owned by the wallet
+    value=gdFhBHaQ, utxo=bc:tapret1st:2b8a634b6ffeccf1f45626cc02ff53c51a883fad2dee7136f356ed5bdba3d5d5:0, witness=bc:2b8a634b6ffeccf1f45626cc02ff53c51a883fad2dee7136f356ed5bdba3d5d5
 ```
 
 For Bob:
 
 ```bash
-rgb -d .bob state $RGB20_CONTRACT RGB20 --sync
-rgb -d .bob state $RGB20_CONTRACT RGB20
+rgb -d .bob state $RGB20_CONTRACT RGB20Fixed --sync
 Global:
-  spec := (naming=(ticker=("TEST"), name=("Test asset"), details=~), precision=8)
-  data := (terms=(""), media=~)
+  spec := (ticker=("TEST"), name=("Test asset"), details=~, precision=8)
+  terms := (text=(""), media=~)
   issuedSupply := (100000000000)
-  created := (1710580778)
 
 Owned:
   assetOwner:
-    amount=1000, utxo=bc:tapret1st:0fd2b9f690428f751aa381c82cadf52b50ced63616802fe0803cb983d5ac3e1a:1, witness=bc:0fd2b9f690428f751aa381c82cadf52b50ced63616802fe0803cb983d5ac3e1a # owned by the wallet
+    value=TadF, utxo=bc:tapret1st:e7f9ba563995090f00e1e279e63151a9ebdc11747843f6195e1a72391985174e:0, witness=bc:2b8a634b6ffeccf1f45626cc02ff53c51a883fad2dee7136f356ed5bdba3d5d5
 ```

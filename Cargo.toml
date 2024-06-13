@@ -7,15 +7,15 @@ resolver = "2"
 
 [dependencies]
 amplify = "4.6.0"
-ascii-armor = "0.2.0"
-strict_encoding = "2.7.0-beta.1"
-bp-core = "0.11.0-beta.5"
-rgb-std = { version = "0.11.0-beta.5", features = ["serde", "fs"] }
+strict_encoding = "2.7.0-beta.4"
+bp-core = "0.11.0-beta.6"
+rgb-std = { version = "0.11.0-beta.6", features = ["serde", "fs"] }
 serde = "1.0"
 serde_json = "1.0"
-rgb-schemata = "0.11.0-beta.5"
-bdk = { version = "1.0.0-alpha.8", default-features = false }
-bdk_esplora = { version = "0.10.0", features = ["blocking"] }
+rgb-schemata = "0.11.0-beta.6"
+rgb-interfaces = "0.11.0-beta.6"
+bdk = { version = "1.0.0-alpha.11", default-features = false }
+bdk_esplora = { version = "0.14.0", features = ["blocking"] }
 hex = "0.4.3"
 
 [features]
