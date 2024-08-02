@@ -89,8 +89,8 @@ To create a RGB20 contract, just clone this repo to you local machine. Then
 compile and run it.
 
 ```bash
-git clone https://github.com/bitlightlabs/bitlight-rgb20-contract
-cd bitlight-rgb20-contract
+$ git clone https://github.com/bitlightlabs/bitlight-rgb20-contract
+$ cd bitlight-rgb20-contract
 ```
 
 edit main.rs, change the beneficiary to alice's address
@@ -101,11 +101,30 @@ edit main.rs, change the beneficiary to alice's address
     let beneficiary = Outpoint::new(beneficiary_txid, 1);
 ```
 
-```
-make run
+Export ESPLORA_SERVER env for esplora-api endpoint:
+
+```bash
+$ export LNPBP_NETWORK=regtest
+$ export ESPLORA_SERVER="http://esplora-api.bitlight-local-env.orb.local:3000"
 ```
 
-```text
+_note:  a locally running bitlight-local-env-esplora-api docker container instance should export **ESPLORA_SERVER** value:_
+
+```bash
+$ export ESPLORA_SERVER="http://localhost:3002"	
+```
+
+_and also corresponding client constructor parameter in [src/bin/broadcast_tx.rs](src/bin/broadcast_tx.rs) set to:_
+
+```rust
+    esplora_client::Builder::new("http://localhost:3002")	
+```
+
+Now, we are creating a RGB20 #TEST contract, which stores in `examples` folder
+
+```bash
+$ make run
+
 The issued contract data:
 {"ticker":"TEST","name":"Test asset","details":null,"precision":"centiMicro"}
 amount=adMhBHaQ, owner=bc:tapret1st:311ec7d43f0f33cda5a0c515a737b5e0bbce3896e6eb32e67db0e868a58f4150:1, witness=~
@@ -119,16 +138,7 @@ Contracts are available in the examples directory
 ---------------------------------
 ```
 
-Now, we are creating a RGB20 #TEST contract, which stores in `examples` fold.
-
 Before importing contracts, let's import our wallets to rgb.
-
-Export ESPLORA_SERVER env for esplora-api endpoint:
-
-```bash
-export LNPBP_NETWORK=regtest
-export ESPLORA_SERVER="http://esplora-api.bitlight-local-env.orb.local:3000"
-```
 
 Create rgb wallet container for Alice:
 
@@ -192,6 +202,13 @@ $ rgb -d .alice contracts
 rgb:2TglHDbZ-!ntHfLf-yLEEFpM-o!sLGAz-Bw84b8m-hXRuSW0	bitcoin            	2024-06-13	rgb:sch:KzMZV9bO7gFhox97!klj0FonG2ZKnjuOIg2tFChu$YA#lucas-episode-silicon
   Developer: ssi:anonymous
 $ export RGB20_CONTRACT="rgb:2TglHDbZ-!ntHfLf-yLEEFpM-o!sLGAz-Bw84b8m-hXRuSW0"
+```
+_note:  special characters (such as "**$**") in RGB20_CONTRACT environment variable will need escaping, i.e.,_ 
+```bash
+$ export RGB20_CONTRACT="rgb:vi09buwx-VuXsvVi-VBA9Htw-sL5Vf81-22oM0V1-pxpGi\$c"
+                                                                           ↑	
+```
+```bash
 # rgb -d <DATA_DIR> state <CONTRACT_ID> <IFACE>
 $ rgb -d .alice state $RGB20_CONTRACT RGB20Fixed
 
