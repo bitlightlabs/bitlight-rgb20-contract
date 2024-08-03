@@ -108,16 +108,16 @@ $ export LNPBP_NETWORK=regtest
 $ export ESPLORA_SERVER="http://esplora-api.bitlight-local-env.orb.local:3000"
 ```
 
-_note:  a locally running bitlight-local-env-esplora-api docker container instance should export **ESPLORA_SERVER** value:_
+_note:  a locally running bitlight-local-env-esplora-**api** docker container instance should export **ESPLORA_SERVER** value:_
 
 ```bash
 $ export ESPLORA_SERVER="http://localhost:3002"	
 ```
 
-_and also corresponding client constructor parameter in [src/bin/broadcast_tx.rs](src/bin/broadcast_tx.rs) set to:_
+_and locally running bitlight-local-env-esplora (server / non-api) docker container client constructor parameter in [src/bin/broadcast_tx.rs](src/bin/broadcast_tx.rs) set to:_
 
 ```rust
-    esplora_client::Builder::new("http://localhost:3002")	
+    esplora_client::Builder::new("http://localhost:5002")	
 ```
 
 Now, we are creating a RGB20 #TEST contract, which stores in `examples` folder
