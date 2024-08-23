@@ -22,4 +22,13 @@ target/
 *.swp
 
 # temp contracts
-examples/
+contracts/
+
+# temp psbt
+psbt/
+
+# test wallets
+.alice/
+.bob/
+bak/
+test/

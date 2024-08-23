@@ -4,8 +4,7 @@ all: build
 
 check: fmt test clippy
 
-test:
-	@if [ ! -d "examples" ]; then mkdir examples; fi
+test: contracts
 	(command -v cargo-nextest && cargo nextest run --all-features) || cargo test --all-features
 
 fmt:
@@ -16,20 +15,20 @@ clippy:
 
 .PHONY: clean
 clean:
-	rm -rf examples
+	rm -rf test
 	cargo clean
 
 build:
 	cargo build --release
 
 run: contracts
-	cargo run --bin bitlight-rgb20-contract
+	cargo run
 	@echo
-	@echo "Contracts are available in the examples directory"
+	@echo "Contracts are available in the test directory"
 	@echo "---------------------------------"
-	@echo "./examples:"
-	@ls -l examples| grep 'rgb'
+	@echo "./test:"
+	@ls -l test| grep 'rgb'
 	@echo "---------------------------------"
 
 contracts:
-	@if [ ! -d "examples" ]; then mkdir examples; fi
+	@if [ ! -d "test" ]; then mkdir test; fi

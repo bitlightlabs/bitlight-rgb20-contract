@@ -108,19 +108,19 @@ $ export LNPBP_NETWORK=regtest
 $ export ESPLORA_SERVER="http://esplora-api.bitlight-local-env.orb.local:3000"
 ```
 
-_note:  a locally running bitlight-local-env-esplora-**api** docker container instance should export **ESPLORA_SERVER** value:_
+_note:  a locally running bitlight-local-env-esplora-**api** docker container instance should export **ESPLORA_SERVER**
+value:_
 
 ```bash
 $ export ESPLORA_SERVER="http://localhost:3002"	
 ```
 
-_and locally running bitlight-local-env-esplora (server / non-api) docker container client constructor parameter in [src/bin/broadcast_tx.rs](src/bin/broadcast_tx.rs) set to:_
+_and locally running bitlight-local-env-esplora (server / non-api) docker container client constructor parameter
+in [examples/broadcast-tx.rs](examples/broadcast-tx.rs) set to:_
 
 ```rust
     esplora_client::Builder::new("http://localhost:5002")	
 ```
-
-Now, we are creating a RGB20 #TEST contract, which stores in `examples` folder
 
 ```bash
 $ make run
@@ -130,15 +130,24 @@ The issued contract data:
 amount=adMhBHaQ, owner=bc:tapret1st:311ec7d43f0f33cda5a0c515a737b5e0bbce3896e6eb32e67db0e868a58f4150:1, witness=~
 totalSupply=adMhBHaQ
 
-Contracts are available in the examples directory
+Contracts are available in the test directory
 ---------------------------------
-./examples:
+./test:
 -rw-r--r--  1 bitlight  staff  21364 Mar 15 19:57 rgb20-simplest.rgb
 -rw-r--r--  1 bitlight  staff  27456 Mar 15 19:57 rgb20-simplest.rgba
 ---------------------------------
 ```
 
+Now, we are creating a RGB20 #TEST contract, which stores in `test` folder.
+
 Before importing contracts, let's import our wallets to rgb.
+
+Export ESPLORA_SERVER env for esplora-api endpoint:
+
+```bash
+export LNPBP_NETWORK=regtest
+export ESPLORA_SERVER="http://esplora-api.bitlight-local-env.orb.local:3000"
+```
 
 Create rgb wallet container for Alice:
 
@@ -186,7 +195,7 @@ Wallet total balance: 100000000 ṩ
 Import contract for Alice
 
 ```
-$ rgb -d .alice import examples/rgb20-simplest.rgb
+$ rgb -d .alice import test/rgb20-simplest.rgb
 
 Importing consignment rgb:csg:D6$4UcFP-6siMEPG-z5WedGG-!gfynub-7vIFN93-KGneAc4#parking-agent-parody:
 - validating the contract rgb:2TglHDbZ-!ntHfLf-yLEEFpM-o!sLGAz-Bw84b8m-hXRuSW0 ... success
@@ -203,11 +212,14 @@ rgb:2TglHDbZ-!ntHfLf-yLEEFpM-o!sLGAz-Bw84b8m-hXRuSW0	bitcoin            	2024-06
   Developer: ssi:anonymous
 $ export RGB20_CONTRACT="rgb:2TglHDbZ-!ntHfLf-yLEEFpM-o!sLGAz-Bw84b8m-hXRuSW0"
 ```
-_note:  special characters (such as "**$**") in RGB20_CONTRACT environment variable will need escaping, i.e.,_ 
+
+_note:  special characters (such as "**$**") in RGB20_CONTRACT environment variable will need escaping, i.e.,_
+
 ```bash
 $ export RGB20_CONTRACT="rgb:vi09buwx-VuXsvVi-VBA9Htw-sL5Vf81-22oM0V1-pxpGi\$c"
                                                                            ↑	
 ```
+
 ```bash
 # rgb -d <DATA_DIR> state <CONTRACT_ID> <IFACE>
 $ rgb -d .alice state $RGB20_CONTRACT RGB20Fixed
@@ -225,7 +237,7 @@ Owned:
 Import contract For Bob:
 
 ```bash
-$ rgb -d .bob import examples/rgb20-simplest.rgb
+$ rgb -d .bob import test/rgb20-simplest.rgb
 $ rgb -d .bob contracts
 $ rgb -d .bob state $RGB20_CONTRACT RGB20Fixed
 
@@ -365,10 +377,20 @@ Now, it's Alice's turn to sign the PSBT file and broadcast it.
 
 Sign the PSBT with sparrow, hal, or bdk-cli.
 
+```shell
+$ bdk-cli -n regtest wallet --descriptor "tr(tprv8ZgxMBicQKsPeHzjP5LTL818LxwHbJNLZRa98Qdnn7M98fW15365cB1Sz9QZvYufASRKH6JEPhfpxVuFTKMHxDcEAVboqKuZdMmxzKVhMnW/86'/1'/0'/0/*)" \ 
+sign --psbt $(cat alice.psbt | base64 | tr -d '\r\n') | jq -r '.psbt' | base64 --decode > alice.psbt.signed
+
+$ hal psbt finalize alice.psbt.signed
+0200000000010184cc73022f7b19317eb3490f10ef7f0...27921857420c21461a205c5b60ca54c00000000
+```
+
+Set the signed PSBT hex encoding string to SOME_TX in examples/broadcast-tx.rs
+
 After broadcasting, mine 1 block.
 
 ```
-cargo run --bin broadcast_tx
+cargo run --example broadcast-tx
 ```
 
 ```
@@ -394,13 +416,14 @@ Global:
 
 Owned:
   assetOwner:
-    value=gdFhBHaQ, utxo=bc:tapret1st:2b8a634b6ffeccf1f45626cc02ff53c51a883fad2dee7136f356ed5bdba3d5d5:0, witness=bc:2b8a634b6ffeccf1f45626cc02ff53c51a883fad2dee7136f356ed5bdba3d5d5
+    value=99999998000, utxo=bc:tapret1st:ff66b39da83f310fb75db3336c9cf509dfd68ecfb7ea67fa556b5160eafe3a9f:0, witness=bc:ff66b39da83f310fb75db3336c9cf509dfd68ecfb7ea67fa556b5160eafe3a9f
 ```
 
 For Bob:
 
 ```bash
-rgb -d .bob state $RGB20_CONTRACT RGB20Fixed --sync
+$ rgb -d .bob state $RGB20_CONTRACT RGB20Fixed --sync
+
 Global:
   spec := (ticker=("TEST"), name=("Test asset"), details=~, precision=8)
   terms := (text=(""), media=~)
@@ -408,5 +431,5 @@ Global:
 
 Owned:
   assetOwner:
-    value=TadF, utxo=bc:tapret1st:e7f9ba563995090f00e1e279e63151a9ebdc11747843f6195e1a72391985174e:0, witness=bc:2b8a634b6ffeccf1f45626cc02ff53c51a883fad2dee7136f356ed5bdba3d5d5
+    value=2000, utxo=bc:tapret1st:04099eb216c8ac6c1767de0c7b6076b2dcabf63583ece8e6f9ccfd6c4cd4a95f:0, witness=bc:ff66b39da83f310fb75db3336c9cf509dfd68ecfb7ea67fa556b5160eafe3a9f
 ```
