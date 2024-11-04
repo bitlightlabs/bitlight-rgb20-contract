@@ -78,6 +78,7 @@ load_wallet
 # alice
 send bcrt1pn0s2pajhsw38fnpgcj79w3kr3c0r89y3xyekjt8qaudje70g4shs20nwfx 1
 send bcrt1plphl407vyfpml2thhypzuqk232256njnaw4zhtmyrrku66pqn9usx4x59h 1
+send bcrt1pr3rupmav8a7av7dqfyvynu2wk02lduggnh9ln4ndze9aqvuv9y3sklwrss 1
 # bob
 send bcrt1p9yjaffzhuh9p7d9gnwfunxssngesk25tz7rudu4v69dl6e7w7qhq5x43k5 1
 mint 1 
@@ -232,6 +233,16 @@ Global:
 Owned:
   assetOwner:
     value=adMhBHaQ, utxo=bc:tapret1st:311ec7d43f0f33cda5a0c515a737b5e0bbce3896e6eb32e67db0e868a58f4150:1, witness=~
+```
+
+Print operation history for Alice
+
+```
+$ rgb -d .alice history $RGB20_CONTRACT
+
+Loading descriptor from wallet default ... success
+Operation	Value	Seal	Witness
+issued	adMhBHaQ	bc:tapret1st:311ec7d43f0f33cda5a0c515a737b5e0bbce3896e6eb32e67db0e868a58f4150:1	~
 ```
 
 Import contract For Bob:
@@ -406,7 +417,6 @@ At that time, Bob and Alice would get different outputs with `rgb state` and `rg
 For Alice:
 
 ```bash
-$ RGB20_CONTRACT="rgb:2TglHDbZ-!ntHfLf-yLEEFpM-o!sLGAz-Bw84b8m-hXRuSW0"
 $ rgb -d .alice state $RGB20_CONTRACT RGB20Fixed --sync
 
 Global:
@@ -417,6 +427,11 @@ Global:
 Owned:
   assetOwner:
     value=99999998000, utxo=bc:tapret1st:ff66b39da83f310fb75db3336c9cf509dfd68ecfb7ea67fa556b5160eafe3a9f:0, witness=bc:ff66b39da83f310fb75db3336c9cf509dfd68ecfb7ea67fa556b5160eafe3a9f
+```
+
+```bash
+$ rgb -d .alice history $RGB20_CONTRACT
+
 ```
 
 For Bob:
@@ -432,4 +447,13 @@ Global:
 Owned:
   assetOwner:
     value=2000, utxo=bc:tapret1st:04099eb216c8ac6c1767de0c7b6076b2dcabf63583ece8e6f9ccfd6c4cd4a95f:0, witness=bc:ff66b39da83f310fb75db3336c9cf509dfd68ecfb7ea67fa556b5160eafe3a9f
+```
+
+```bash
+$ rgb -d .bob history $RGB20_CONTRACT
+
+Loading descriptor from wallet default ... success
+Operation	Value	Seal	Witness
+received	TadF	bc:tapret1st:04099eb216c8ac6c1767de0c7b6076b2dcabf63583ece8e6f9ccfd6c4cd4a95f:0	bc:8d6f2936ef1bb39728821e1af97b950b6941de64450e6fabaec20c8cb0f970a9 (105@1726911117)
+
 ```
